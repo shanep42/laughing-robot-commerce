@@ -23,6 +23,9 @@ router.get('/:id', async (req, res) => {
       // be sure to include its associated Product data
       include: [{ model: Product }]
     });
+    if (!tagData) {
+      res.status(404).json({ message: 'No tag found with this id' })
+    }
     res.status(200).json(tagData);
   } catch (err) {
     res.status(500).json(err);
@@ -48,6 +51,9 @@ router.put('/:id', (req, res) => {
     },
   })
     .then((tag) => {
+      if (!tag) {
+        res.status(404).json({ message: 'No tag found with this id' })
+      }
       res.status(200).json(tag);
     })
     .catch((err) => {
@@ -63,6 +69,9 @@ router.delete('/:id', (req, res) => {
     }
   })
     .then(data => {
+      if (!data) {
+        res.status(404).json({ message: 'No tag found with this id' })
+      }
       res.status(200).json(data)
     })
     .catch((err) => {
